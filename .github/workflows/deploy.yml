@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clonar el repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Configurar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Puedes ajustar la versión que necesites
+
+      # 3. Instalar dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Construir la aplicación Angular
+      - name: Build the Angular app
+        run: |
+          npm run build -- --prod --base-href /mi-aplicacion-angular/
+        # Nota:
+        # El parámetro --base-href se utiliza para que las rutas funcionen correctamente en GitHub Pages.
+        # Asegúrate de que 'mi-aplicacion-angular' coincide con el nombre de tu repositorio.
+
+      # 5. Desplegar a GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/mi-aplicacion-angular
