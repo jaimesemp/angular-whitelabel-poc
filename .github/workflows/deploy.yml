@@ -27,7 +27,7 @@ jobs:
       # 4. Construir la aplicación Angular
       - name: Build the Angular app
         run: |
-          npm run build --base-href /angular-github-actions/
+          npm run build --base-href angular-github-actions
         # Nota:
         # El parámetro --base-href se utiliza para que las rutas funcionen correctamente en GitHub Pages.
 
